@@ -59,7 +59,6 @@ CREATE TABLE locations (
 );
 
 CREATE INDEX idx_locations_provider ON locations(fk_provider_id);
-CREATE INDEX idx_locations_coords ON locations(latitude, longitude);
 
 -- =====================================================
 -- EQUIPMENT TABLES
