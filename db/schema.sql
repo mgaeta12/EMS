@@ -76,7 +76,7 @@ CREATE TABLE air_handler_equipment (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     manufacturer VARCHAR(255) NOT NULL,
     model_number VARCHAR(255) NOT NULL,
-    serial_number VARCHAR(255) UNIQUE NOT NULL,
+    serial_number VARCHAR(255) NOT NULL,
     product_number VARCHAR(255),
 
     -- Electrical specs
@@ -99,7 +99,7 @@ CREATE TABLE compressor_equipment (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     manufacturer VARCHAR(255) NOT NULL,
     model_number VARCHAR(255) NOT NULL,
-    serial_number VARCHAR(255) UNIQUE NOT NULL,
+    serial_number VARCHAR(255) NOT NULL,
     product_number VARCHAR(255),
 
     -- Electrical specs
@@ -123,6 +123,9 @@ CREATE TABLE compressor_equipment (
     lo_psi INTEGER,
     design_pressure VARCHAR(100),
     test_pressure_gauge VARCHAR(100),
+    power_supply VARCHAR(255),
+    kpa_high BIGINT,
+    kpa_low BIGINT,
 
     -- Charge info
     factory_charged DECIMAL(6,2),
@@ -153,7 +156,7 @@ CREATE TABLE hvac_units (
     installation_notes TEXT,
 
     -- Configuration
-    refrigerant_type refrigerant_enum DEFAULT 'R410A',
+    refrigerant_type refrigerant_enum NOT NULL,
     fast_scan_enabled BOOLEAN DEFAULT false,
     fast_scan_until TIMESTAMP,
 
