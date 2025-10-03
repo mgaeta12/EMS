@@ -26,6 +26,12 @@ CREATE TABLE service_providers (
     secondary_contact_name VARCHAR(255),
     secondary_contact_phone VARCHAR(20),
 
+    -- Notification settings
+    notification_email VARCHAR(255),
+    notification_phone VARCHAR(20),
+    enable_email_notifications BOOLEAN DEFAULT true,
+    enable_text_notifications BOOLEAN DEFAULT true,
+
     -- Metadata
     is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -198,6 +204,7 @@ CREATE TABLE hvac_telemetry (
     -- Air handler readings
     supply_air DECIMAL(5,2),
     return_air DECIMAL(5,2),
+    r_humidity DECIMAL(5,2),
     final_rms_voltage DECIMAL(5,2),
     blower_amps DECIMAL(5,2),
     peak_pressure DECIMAL(6,2),
