@@ -87,8 +87,8 @@ CREATE TABLE air_handler_equipment (
 
     -- Electrical specs
     unit_volts VARCHAR(50),
-    motor_hp DECIMAL(5,2),
-    motor_fla DECIMAL(6,2),
+    motor_hp DOUBLE PRECISION,
+    motor_fla DOUBLE PRECISION,
     phase_hertz VARCHAR(50),
 
     -- Other specs
@@ -114,15 +114,15 @@ CREATE TABLE compressor_equipment (
     hertz INTEGER,
     min_volts INTEGER,
     max_volts INTEGER,
-    rla DECIMAL(6,2),
-    lra DECIMAL(6,2),
-    min_circuit_amps DECIMAL(6,2),
+    rla DOUBLE PRECISION,
+    lra DOUBLE PRECISION,
+    min_circuit_amps DOUBLE PRECISION,
     max_fuse INTEGER,
     max_breaker INTEGER,
 
     -- Fan specs
     fan_volts VARCHAR(50),
-    fan_fla DECIMAL(6,2),
+    fan_fla DOUBLE PRECISION,
 
     -- Pressure specs
     hi_psi INTEGER,
@@ -134,7 +134,7 @@ CREATE TABLE compressor_equipment (
     kpa_low BIGINT,
 
     -- Charge info
-    factory_charged DECIMAL(6,2),
+    factory_charged DOUBLE PRECISION,
     piston_indoor INTEGER,
     piston_outdoor INTEGER,
     indoor_txv_sub_cool INTEGER,
@@ -189,25 +189,25 @@ CREATE TABLE hvac_telemetry (
     pk_timestamp TIMESTAMP NOT NULL,
 
     -- Compressor readings
-    pressure_suction DECIMAL(6,2),
-    pressure_liquid DECIMAL(6,2),
-    pressure_heat DECIMAL(6,2),
-    compressor_amps DECIMAL(5,2),
-    fan_amps DECIMAL(5,2),
-    reversing_temp DECIMAL(5,2),
-    liquid_temp DECIMAL(5,2),
-    suction_temp DECIMAL(5,2),
-    compressor_temp DECIMAL(5,2),
-    fan_temp DECIMAL(5,2),
-    ambient_temp DECIMAL(5,2),
+    pressure_suction DOUBLE PRECISION,
+    pressure_liquid DOUBLE PRECISION,
+    pressure_heat DOUBLE PRECISION,
+    compressor_amps DOUBLE PRECISION,
+    fan_amps DOUBLE PRECISION,
+    reversing_temp DOUBLE PRECISION,
+    liquid_temp DOUBLE PRECISION,
+    suction_temp DOUBLE PRECISION,
+    compressor_temp DOUBLE PRECISION,
+    fan_temp DOUBLE PRECISION,
+    ambient_temp DOUBLE PRECISION,
 
     -- Air handler readings
-    supply_air DECIMAL(5,2),
-    return_air DECIMAL(5,2),
-    r_humidity DECIMAL(5,2),
-    final_rms_voltage DECIMAL(5,2),
-    blower_amps DECIMAL(5,2),
-    peak_pressure DECIMAL(6,2),
+    supply_air DOUBLE PRECISION,
+    return_air DOUBLE PRECISION,
+    r_humidity DOUBLE PRECISION,
+    final_rms_voltage DOUBLE PRECISION,
+    blower_amps DOUBLE PRECISION,
+    peak_pressure DOUBLE PRECISION,
 
     -- Status flags
     fuse_ok SMALLINT,
@@ -275,7 +275,7 @@ CREATE TABLE alert_rules (
     -- Condition
     field_name VARCHAR(100) NOT NULL,
     operator VARCHAR(10) NOT NULL CHECK (operator IN ('>', '<', '>=', '<=', '=', '!=')),
-    threshold_value DECIMAL(10,2) NOT NULL,
+    threshold_value DOUBLE PRECISION NOT NULL,
 
     -- Optional: only apply to specific units or providers
     fk_provider_id UUID REFERENCES service_providers(id),
@@ -299,7 +299,7 @@ CREATE TABLE alerts (
 
     -- Alert details
     triggered_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    triggered_value DECIMAL(10,2) NOT NULL,
+    triggered_value DOUBLE PRECISION NOT NULL,
     severity VARCHAR(20) NOT NULL,
     message TEXT,
 
@@ -308,7 +308,6 @@ CREATE TABLE alerts (
 );
 
 CREATE INDEX idx_alerts_serial ON alerts(fk_serial_number, triggered_at DESC);
-CREATE INDEX idx_alerts_unack ON alerts(is_acknowledged) WHERE is_acknowledged = false;
 
 -- =====================================================
 -- MEDIA STORAGE
